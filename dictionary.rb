@@ -1,3 +1,5 @@
+require "./pattern_item"
+
 # Dictionary
 class Dictionary
   def initialize
@@ -14,7 +16,7 @@ class Dictionary
       f.each do |line|
         pattern, phrases = line.chomp.split("\t")
         next if pattern.nil? || phrases.nil?
-        @patterns.push({ "pattern" => pattern, "phrases" => phrases })
+        @patterns.push(PatternItem.new(pattern, phrases))
       end
     end
   end

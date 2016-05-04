@@ -7,7 +7,7 @@ class Responder
     @dictionary = dictionary
   end
 
-  def response(input)
+  def response(input, mood = nil)
     ""
   end
 
@@ -19,13 +19,13 @@ class Responder
 end
 
 class WhatResponder < Responder
-  def response(input)
+  def response(input, mood = nil)
     "#{input}は何ですか？"
   end
 end
 
 class RandomResponder < Responder
-  def initialize(name)
+  def initialize(name, dictionary)
     super
     @phrases = []
     open("dics/random.txt") do |f|
@@ -36,17 +36,17 @@ class RandomResponder < Responder
     end
   end
 
-  def response(_input)
+  def response(_input, mood = nil)
     select_random(@phrases)
   end
 end
 
 class PatternResponder < Responder
-  def response(input)
+  def response(input, mood)
     @dictionary.patterns.each do |item|
-      m = input.match(item["pattern"])
+      m = item.match(input)
       if !m.nil?
-        resp = select_random(item["phrases"].split("|"))
+        resp = item.choice(mood)
         return resp.gsub(/%match%/, m.to_s)
       end
     end
