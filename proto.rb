@@ -5,12 +5,15 @@ def prompt(rise)
 end
 
 puts "Rise System prototype: proto"
-proto = Rise.new("proto")
+rise = Rise.new("proto")
 while true
   print("> ")
   input = gets.chomp
-  break if input.empty?
-
-  response = proto.dialogue(input)
-  puts(prompt(proto) + response)
+  if !input.empty?
+    response = rise.dialogue(input)
+    puts(prompt(rise) + response)
+  else
+    rise.save
+    break
+  end
 end

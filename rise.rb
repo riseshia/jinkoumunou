@@ -18,12 +18,17 @@ class Rise
   def dialogue(input)
     @emotion.update(input)
     # @responder = @responders[rand(@responders.size)]
-    @responder = PatternResponder.new("Pattern", @dictionary)
+    @responder = RandomResponder.new("Random", @dictionary)
+    @dictionary.study(input)
     @responder.response(input, @emotion.mood)
   end
 
   def responder_name
     @responder.name
+  end
+
+  def save
+    @dictionary.save
   end
 
   attr_reader :name
