@@ -52,3 +52,19 @@ class PatternResponder < Responder
     select_random(@dictionary.random)
   end
 end
+
+class TemplateResponder < Responder
+  def response(input, parts, mood)
+    keywords = []
+    parts.each do |word, part|
+      keywords.push(word) if Morph.keyword?(part)
+    end
+    count = keywords.size
+    if count > 0 && templates = @dictionary.templates[count]
+      template = select_random(templates)
+      return template.gsub(/%noun%/) { keywords.shift }
+    end
+
+    select_random(@dictionary.random)
+  end
+end

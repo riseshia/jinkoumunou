@@ -15,14 +15,16 @@ class Rise
       RandomResponder.new("Random", @dictionary),
       PatternResponder.new("Pattern", @dictionary)
     ]
+    # TemplateResponder.new("Random", @dictionary, parts)
   end
 
   def dialogue(input)
     @emotion.update(input)
+    parts = Morph::analyze(input)
+
     # @responder = @responders[rand(@responders.size)]
     @responder = RandomResponder.new("Random", @dictionary)
 
-    parts = Morph::analyze(input)
     @dictionary.study(input, parts)
     @responder.response(input, @emotion.mood)
   end
