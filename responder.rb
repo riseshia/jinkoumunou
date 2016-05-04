@@ -1,5 +1,3 @@
-require "./dictionary"
-
 # Responder
 class Responder
   def initialize(name, dictionary)

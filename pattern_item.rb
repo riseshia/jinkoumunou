@@ -17,6 +17,18 @@ class PatternItem
     str.match(@pattern)
   end
 
+  def add_phrase(phrase)
+    unless @phrases.find { |p| p["phrase"] == phrase }
+      @phrases.push({ "need" => 0, "phrases" => phrase })
+    end
+  end
+
+  def make_line
+    pattern = @modify.to_s + "##" + @pattern
+    phrases = @phrases.map { |p| p["need"].to_s + "##" + p["phrases"] }
+    pattern + "\t" + phrases.join("|")
+  end
+
   def choice(mood)
     choices = []
     @phrases.each do |p|

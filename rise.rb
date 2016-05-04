@@ -1,5 +1,7 @@
 require "./responder"
+require "./dictionary"
 require "./emotion"
+require "./morph"
 
 # Rise
 class Rise
@@ -19,7 +21,9 @@ class Rise
     @emotion.update(input)
     # @responder = @responders[rand(@responders.size)]
     @responder = RandomResponder.new("Random", @dictionary)
-    @dictionary.study(input)
+
+    parts = Morph::analyze(input)
+    @dictionary.study(input, parts)
     @responder.response(input, @emotion.mood)
   end
 
