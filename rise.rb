@@ -4,10 +4,14 @@ require "./responder"
 class Rise
   def initialize(name)
     @name = name
-    @responder = RandomResponder.new("Random")
+    @responders = [
+      WhatResponder.new("What"),
+      RandomResponder.new("Random")
+    ]
   end
 
   def dialogue(input)
+    @responder = @responders[rand(@responders.size)]
     @responder.response(input)
   end
 
